@@ -1,0 +1,2 @@
+fr/projetiwa/covid_alert_user_ms/CovidAlertUserMsApplication.java
+ fr.projetiwa.covid_alert_user_ms.CovidAlertUserMsApplication
