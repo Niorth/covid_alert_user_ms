@@ -3,6 +3,7 @@ package fr.projetiwa.covid_alert_user_ms.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -22,13 +23,13 @@ public class Person {
     private String password;
 
     @ManyToMany
-    @JoinTable(name="position",
+    @JoinTable(name="person_position",
             joinColumns = @JoinColumn(name="person_id"),
             inverseJoinColumns = @JoinColumn(name="position_id"))
     private List<Position> position;
 
     @OneToMany(mappedBy = "person")
-    private Set<Person_state> person_states;
+    private List<Person_state> person_states;
 
     public long getPerson_id() {
         return person_id;
@@ -46,11 +47,11 @@ public class Person {
         this.position = position;
     }
 
-    public Set<Person_state> getPerson_states() {
+    public List<Person_state> getPerson_states() {
         return person_states;
     }
 
-    public void setPerson_states(Set<Person_state> person_states) {
+    public void setPerson_states(List<Person_state> person_states) {
         this.person_states = person_states;
     }
 

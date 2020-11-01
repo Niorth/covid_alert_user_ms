@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Form</h1>
+    <form id="register_form"  th:object="${person}">
+        <p>Email: <input type="email" th:field="*{email}" required/></p>
+        <p>First: <input type="text" th:field="*{first_name}" required/></p>
+        <p>Last: <input type="text" th:field="*{last_name}" required/></p>
+        <p>Pass: <input type="password" th:field="*{password}" required/></p>
+        <p>Phone: <input type="tel" th:field="*{phone_number}"  pattern="[0-9]{10}"  required/></p>
+        <button value="Submit" type="submit">Register</button>
+    </form>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    const serialize_form = form => JSON.stringify(
+        Array.from(new FormData(form).entries())
+            .reduce((m, [ key, value ]) => Object.assign(m, { [key]: value }), {})
+    );
+
+    $('#register_form').on('submit', function(event) {
+        event.preventDefault();
+
+        const json = serialize_form(this);
+        console.log(json);
+        $.ajax({
+          type: 'POST',
+          url: '/person',
+          dataType: 'json',
+          data: json,
+          contentType: 'application/json',
+          success: function(data) {
+            alert(data)
+          }
+        });
+    });
+
+</script>
+</html>

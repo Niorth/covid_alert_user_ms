@@ -5,6 +5,7 @@ import fr.projetiwa.covid_alert_user_ms.models.Person;
 import fr.projetiwa.covid_alert_user_ms.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,5 +28,6 @@ public class PersonController {
     @ResponseStatus ( HttpStatus.CREATED )
     public Person create(@RequestBody final Person person) {
         return personRepository.saveAndFlush(person); }
+
 
 }

@@ -1,11 +1,12 @@
 package fr.projetiwa.covid_alert_user_ms.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity(name="person_states")
+@Entity(name="person_state")
 @Access(AccessType.FIELD)
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Person_state {
@@ -13,14 +14,16 @@ public class Person_state {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long person_state_id;
+
     @ManyToOne
     @JoinColumn(name = "person_id")
+    @JsonIgnore
     private Person person;
 
     private Date date;
 
     @ManyToOne
-    @JoinColumn(name = "covid_state_id")
+    @JoinColumn(name = "state_id")
     private Covid_state covid_state;
     public long getPerson_state_id() {
         return person_state_id;

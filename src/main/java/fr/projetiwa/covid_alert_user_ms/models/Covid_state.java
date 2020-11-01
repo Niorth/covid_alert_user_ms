@@ -1,12 +1,14 @@
 package fr.projetiwa.covid_alert_user_ms.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 
-@Entity(name="covid_states")
+@Entity(name="covid_state")
 @Access(AccessType.FIELD)
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Covid_state {
@@ -17,7 +19,8 @@ public class Covid_state {
     private String state_label;
 
     @OneToMany(mappedBy = "covid_state")
-    Set<Person_state> state_persons;
+
+    List<Person_state> state_persons;
 
 
 }
