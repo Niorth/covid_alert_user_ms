@@ -1,2 +1,0 @@
-fr/projetiwa/covid_alert_user_ms/CovidAlertUserMsApplicationTests.java
- fr.projetiwa.covid_alert_user_ms.CovidAlertUserMsApplicationTests
