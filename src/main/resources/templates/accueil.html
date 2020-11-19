@@ -11,13 +11,53 @@ Bienvenue !
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript">
+<script src="http://localhost:8080/auth/js/keycloak.js" type="text/javascript"></script>
 
+<script type="text/javascript" defer>
+    const keycloak = Keycloak({
+        "realm": "covid-alert",
+        "auth-server-url": "http://localhost:8080/auth",
+        "ssl-required": "external",
+        "resource": "covid-alert/user-app",
+        "public-client": true,
+        "confidential-port": 0,
+        "url": 'http://localhost:8080/auth',
+        "clientId": 'user-app',
+        "enable-cors": true
+    });
+
+    const loadData = () => {
+        console.log(keycloak.subject);
+        if (keycloak.idToken) {
+            console.log('IDToken');
+            console.log(keycloak.token)
+
+        } else {
+            keycloak.loadUserProfile(function() {
+                console.log('Account Service');
+                console.log(keycloak.profile.username);
+
+            }, function() {
+                console.log('Failed to retrieve user details. Please enable claims or account role');
+            });
+        }
+    };
+    const reloadData = () => {
+        keycloak.updateToken()
+            .success(loadData)
+            .error(() => {
+                console.log('Failed to load data.  User is logged out.');
+            });
+    }
     $( document ).ready(function() {
+        keycloak.init({onLoad: 'login-required', "checkLoginIframe": false}).success(reloadData);
 
         $.ajax({
             type: 'GET',
             url: 'http://localhost:3004/notifications/mustbenotified',
+            headers: {
+                "Authorization": "Bearer " + keycloak.token
+            },
             dataType: 'json',
             contentType: 'application/json',
             success: function (data) {
