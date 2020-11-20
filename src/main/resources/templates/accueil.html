@@ -31,6 +31,7 @@ Bienvenue !
         if (keycloak.idToken) {
             console.log('IDToken');
             console.log(keycloak.token)
+            sendRequest()
 
         } else {
             keycloak.loadUserProfile(function() {
@@ -49,9 +50,7 @@ Bienvenue !
                 console.log('Failed to load data.  User is logged out.');
             });
     }
-    $( document ).ready(function() {
-        keycloak.init({onLoad: 'login-required', "checkLoginIframe": false}).success(reloadData);
-
+    const sendRequest = () => {
         $.ajax({
             type: 'GET',
             url: 'http://localhost:3004/notifications/mustbenotified',
@@ -61,9 +60,15 @@ Bienvenue !
             dataType: 'json',
             contentType: 'application/json',
             success: function (data) {
-                alert(data)
+                if(data){
+                    alert("Vous êtes cas contact")
+                }
             }
         });
+    }
+
+    $( document ).ready(function() {
+        keycloak.init({onLoad: 'login-required', "checkLoginIframe": false}).success(reloadData);
     });
 
 
