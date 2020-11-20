@@ -21,7 +21,7 @@ public class PageController {
     @GetMapping
     @CrossOrigin(origins = "*")
     public String accueil () {
-        return "accueil";
+        return "index";
     }
 
 }
