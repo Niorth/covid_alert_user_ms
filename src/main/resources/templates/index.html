@@ -24,7 +24,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
     <div class="container">
       <a class="navbar-brand js-scroll-trigger" href="#page-top">Covid-Alert</a>
-  
+    </div>
   </nav>
 
   <header class="bg-primary text-white">
@@ -43,12 +43,8 @@
           <h2>My status : (covided ou pas) </h2>
           <h2>Features : </h2>
           <button type="button" class="btn btn-primary">Refresh status🔄</button>
-          <button type="button" class="btn btn-primary">Send my position 🗺️ </button>
+          <button type="button" class="btn btn-primary" id="setPosition">Send my position 🗺️ </button>
           <button type="button" class="btn btn-primary">History</button>
-
-     
-
-      
         </div>
       </div>
     </div>
@@ -138,6 +134,38 @@
   });
 
 
+  $("#setPosition").click(function() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(getLocationAjax);
+    } else {
+      console.log("position not allowed")
+      //TODO : Error box
+    }
+  });
+
+  function getLocationAjax(position) {
+    $.ajax({
+      type: "POST",
+      contentType: 'application/json',
+      headers: {
+        "Authorization": "Bearer " + keycloak.token
+      },
+      url: "http://localhost:3003/positions/setPositionKafka",
+      dataType: 'json',
+      data: JSON.stringify({"latitude": position.coords.latitude, "longitude": position.coords.longitude, "accuracy": position.coords.accuracy}),
+      timeout: 100000,
+      success: function (id) {
+        console.log("SUCCESS: ", id);
+        window.location.href = 'donePosition'
+      },
+      error: function (e) {
+        console.log("ERROR: ", e);
+      },
+      done: function (e) {
+        console.log("DONE");
+      }
+    });
+  }
 </script>
 
 </html>
