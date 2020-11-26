@@ -10,16 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
+@CrossOrigin
 public class PageController {
-
-    @GetMapping("/person/register")
-    public String mainPage (Model model) {
-        model.addAttribute("person", new Person());
-        return "register";
-    }
-
-    @GetMapping
-    @CrossOrigin(origins = "*")
+    @GetMapping("/person/index")
     public String accueil () {
         return "index";
     }
