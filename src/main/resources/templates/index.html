@@ -44,7 +44,7 @@
           <h2>Features : </h2>
           <button type="button" class="btn btn-primary">Refresh status🔄</button>
           <button type="button" class="btn btn-primary" id="setPosition">Send my position 🗺️ </button>
-          <button type="button" class="btn btn-primary">History</button>
+          <button type="button" class="btn btn-primary" id="history">History</button>
         </div>
       </div>
     </div>
@@ -105,6 +105,7 @@
       });
     }
   };
+
   const reloadData = () => {
     keycloak.updateToken()
             .success(loadData)
@@ -166,6 +167,10 @@
       }
     });
   }
+
+  $("#history").click(function() {
+    window.location.href = 'http://localhost:3002/personState/states'
+  });
 </script>
 
 </html>
