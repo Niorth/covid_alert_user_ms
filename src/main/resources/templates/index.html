@@ -60,11 +60,11 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 mx-auto">
-          <a href="#" class="btn btn-secondary btn-lg" role="button">Change my status</a>
+          <a href="http://localhost:3000/personState/update" class="btn btn-secondary btn-lg" role="button">Change my status</a>
 
-          <h2>My status : (covided ou pas) </h2>
+          <h2 id="covided"> </h2>
           <h2>Features : </h2>
-          <button type="button" class="btn btn-primary">Refresh status🔄</button>
+          <button type="button" onclick="sendRequest()" class="btn btn-primary">Refresh status🔄</button>
           <button type="button" class="btn btn-primary" id="setPosition">Send my position 🗺️ </button>
           <button type="button" class="btn btn-primary" id="history">History</button>
         </div>
@@ -144,6 +144,21 @@
         if(data){
           $(".toast").toast("show")
         }
+        getState();
+      }
+    });
+  }
+  const getState = () => {
+    $.ajax({
+      type: 'GET',
+      url: 'http://localhost:3002/personState/currentstate',
+      headers: {
+        "Authorization": "Bearer " + keycloak.token
+      },
+      dataType: 'json',
+      contentType: 'application/json',
+      success: function (data) {
+        $('#covided').html("My status : "+data.state);
       }
     });
   }
